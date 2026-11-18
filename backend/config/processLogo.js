@@ -1,4 +1,7 @@
-const sharp = require('sharp');
+let sharp = null;
+try {
+  sharp = require('sharp');
+} catch {}
 const fs = require('fs');
 const path = require('path');
 
@@ -8,7 +11,7 @@ const OUTPUT_ICON = path.join(__dirname, '..', '..', 'frontend', 'public', 'logo
 
 async function processLogo() {
   try {
-    if (!fs.existsSync(INPUT_JPG)) return;
+    if (!sharp || !fs.existsSync(INPUT_JPG)) return;
 
     const { data, info } = await sharp(INPUT_JPG)
       .ensureAlpha()

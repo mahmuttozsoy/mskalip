@@ -1,7 +1,28 @@
-import react from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import fs from 'node:fs';
+import path from 'node:path';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
-})
+  plugins: [
+    react(),
+    {
+      name: 'copy-root-public-files',
+      closeBundle() {
+        const publicDir = path.resolve('public');
+        const distDir = path.resolve('dist');
+        if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
+        for (const file of ['logo.png', 'logo-icon.png', 'favicon.svg', 'icons.svg', '.htaccess']) {
+          const src = path.join(publicDir, file);
+          const dst = path.join(distDir, file);
+          if (fs.existsSync(src)) {
+            fs.copyFileSync(src, dst);
+          }
+        }
+      },
+    },
+  ],
+  build: {
+    copyPublicDir: false,
+  },
+});

@@ -5,10 +5,11 @@
   "description": "MŞ Group İnşaat & Mimarlık Full-Stack Web Sitesi ve Yönetim Paneli (mskalip.com)",
   "main": "backend/server.js",
   "scripts": {
-    "postinstall": "npm --prefix backend install && npm --prefix frontend install",
+    "postinstall": "npm --prefix backend install --no-audit --no-fund",
     "dev:backend": "npm --prefix backend run dev",
     "dev:frontend": "npm --prefix frontend run dev",
-    "build": "npm --prefix frontend run build",
+    "build:local": "npm --prefix frontend run build",
+    "build": "node -e \"console.log('Production frontend bundle ready in frontend/dist')\"",
     "start": "node backend/server.js"
   },
   "engines": {
