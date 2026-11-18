@@ -80,7 +80,8 @@ export default function ContactPage() {
               marginBottom: '16px',
             }}
           >
-            İletişim & <span style={{ color: 'var(--color-primary)' }}>Ücretsiz Keşif</span>
+            İletişim <span style={{ fontFamily: 'var(--font-primary)', fontWeight: 700 }}>&amp;</span>{' '}
+            <span style={{ color: 'var(--color-primary)' }}>Ücretsiz Keşif</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '620px', fontSize: '1.1rem', lineHeight: 1.7 }}>
             Projeniz hakkında detaylı bilgi almak, fiyat teklifi istemek veya ücretsiz keşif randevusu oluşturmak için

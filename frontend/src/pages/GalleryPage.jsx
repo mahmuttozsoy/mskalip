@@ -111,14 +111,15 @@ export default function GalleryPage() {
           </div>
           <h1
             style={{
-              fontFamily: 'Playfair Display',
+              fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2.2rem, 4vw, 3.4rem)',
               fontWeight: 800,
               color: 'white',
               marginBottom: '12px',
             }}
           >
-            Proje & Şantiye <span style={{ color: 'var(--color-primary)' }}>Galerimiz</span>
+            Proje <span style={{ fontFamily: 'var(--font-primary)', fontWeight: 700 }}>&amp;</span> Şantiye{' '}
+            <span style={{ color: 'var(--color-primary)' }}>Galerimiz</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.75)', maxWidth: '640px', fontSize: '1.05rem' }}>
             Şantiyelerimizden {images.length} fotoğraf ve {videos.length} uygulama videosu ile çalışmalarımızı yakından inceleyin.

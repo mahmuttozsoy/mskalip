@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;600;700;800&display=swap');
 
+/* Playfair Display fontundaki süslü '&' sembolünü standart, düz ve okunaklı '&' işareti ile değiştir */
+@font-face {
+  font-family: 'CleanAmpersand';
+  src: local('Inter'), local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial');
+  unicode-range: U+0026;
+  font-weight: 100 900;
+  font-style: normal;
+}
+
 /* ===================================
    CSS CUSTOM PROPERTIES
    =================================== */
@@ -22,7 +31,7 @@
   
   /* Typography */
   --font-primary: 'Inter', sans-serif;
-  --font-display: 'Playfair Display', serif;
+  --font-display: 'CleanAmpersand', 'Playfair Display', serif;
   
   /* Spacing */
   --section-padding: 100px 0;

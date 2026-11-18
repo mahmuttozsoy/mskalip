@@ -79,7 +79,8 @@ export default function AboutPage() {
               marginBottom: '16px',
             }}
           >
-            Hakkımızda & <span style={{ color: 'var(--color-primary)' }}>Vizyonumuz</span>
+            Hakkımızda <span style={{ fontFamily: 'var(--font-primary)', fontWeight: 700 }}>&amp;</span>{' '}
+            <span style={{ color: 'var(--color-primary)' }}>Vizyonumuz</span>
           </h1>
           <p style={{ color: 'rgba(255,255,255,0.7)', maxWidth: '620px', fontSize: '1.1rem', lineHeight: 1.7 }}>
             {settings.company_founded || '2010'} yılından bu yana estetik mimariyi yüksek mühendislik kalitesiyle

@@ -183,7 +183,7 @@ export default function QuoteWizard() {
           </div>
           <div>
             <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '1.35rem', color: 'white', margin: 0 }}>
-              Online Proje & Maliyet Teklif Sihirbazı
+              Online Proje <span style={{ fontFamily: 'var(--font-primary)', fontWeight: 700 }}>&amp;</span> Maliyet Teklif Sihirbazı
             </h3>
             <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', margin: 0 }}>
               3 adımda projenizin detaylarını seçin, uzman mühendis ekibimiz size özel fiyat çalışmasını hazırlasın
