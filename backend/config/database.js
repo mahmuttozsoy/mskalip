@@ -1,29 +1,15 @@
 const mysql = require('mysql2/promise');
 const { executeLocalQuery, loadStore } = require('./localStore');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 let pool = null;
-let useLocalStore = false;
-
-function createPool(password) {
-  return mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 3306,
-    user: process.env.DB_USER || 'root',
-    password: password !== undefined ? password : (process.env.DB_PASSWORD || 'Mahmut.21'),
-    database: process.env.DB_NAME || 'mskalip',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0,
-    charset: 'utf8mb4',
-  });
-}
-
-pool = createPool();
+// Başlangıçta MySQL bağlantısı doğrulanana kadar yerel JSON veritabanı aktif olsun (503 / bağlantı hatasını önler)
+let useLocalStore = true;
 
 const db = {
   async query(sql, params = []) {
-    if (useLocalStore) {
+    if (useLocalStore || !pool) {
       return executeLocalQuery(sql, params);
     }
     try {
@@ -33,7 +19,8 @@ const db = {
         err.code === 'ER_ACCESS_DENIED_ERROR' ||
         err.code === 'ECONNREFUSED' ||
         err.code === 'ER_BAD_DB_ERROR' ||
-        err.code === 'PROTOCOL_CONNECTION_LOST'
+        err.code === 'PROTOCOL_CONNECTION_LOST' ||
+        err.code === 'ETIMEDOUT'
       ) {
         if (!useLocalStore) {
           useLocalStore = true;

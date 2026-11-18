@@ -5,7 +5,7 @@ const path = require('path');
 const db = require('./database');
 const processLogo = require('./processLogo');
 const syncWorkspaceMedia = require('./syncMedia');
-require('dotenv').config();
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') });
 
 const DB_FILE = path.join(__dirname, '..', 'database', 'local_db.json');
 const ENV_FILE = path.join(__dirname, '..', '.env');
@@ -21,19 +21,9 @@ let currentDbState = {
 
 async function tryConnectWithPasswords() {
   const configuredPassword = process.env.DB_PASSWORD || 'Mahmut.21';
-  const candidates = [
-    configuredPassword,
-    'Mahmut.21',
-    '',
-    'root',
-    '1234',
-    '123456',
-    '12345678',
-    'password',
-    'admin',
-    'mysql',
-    'Admin123!',
-  ];
+  const candidates = configuredPassword
+    ? [configuredPassword, 'Mahmut.21', '']
+    : ['Mahmut.21', ''];
 
   for (const pwd of candidates) {
     try {
@@ -44,6 +34,7 @@ async function tryConnectWithPasswords() {
         password: pwd,
         multipleStatements: true,
         charset: 'utf8mb4',
+        connectTimeout: 2000,
       });
       return { conn, password: pwd };
     } catch (err) {
