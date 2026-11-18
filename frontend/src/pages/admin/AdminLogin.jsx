@@ -88,35 +88,8 @@ export default function AdminLogin() {
             )}
           </button>
         </form>
-        
-        <div
-          style={{
-            marginTop: '20px',
-            padding: '12px 16px',
-            background: 'rgba(184,134,11,0.1)',
-            border: '1px solid rgba(184,134,11,0.25)',
-            borderRadius: '10px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            fontSize: '12px',
-            color: 'rgba(255,255,255,0.75)',
-          }}
-        >
-          <div>
-            <div><strong>Kullanıcı:</strong> admin</div>
-            <div><strong>Şifre:</strong> Admin123!</div>
-          </div>
-          <button
-            type="button"
-            className="admin-btn admin-btn-secondary admin-btn-sm"
-            onClick={() => setForm({ username: 'admin', password: 'Admin123!' })}
-          >
-            Otomatik Doldur
-          </button>
-        </div>
 
-        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <a href="/" style={{ color: 'rgba(255,255,255,0.3)', fontSize: '13px' }}>
             ← Siteye Dön
           </a>
