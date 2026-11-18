@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 const ROOT_DIR = path.join(__dirname, '..', '..');
 const MEDIA_ARCHIVE_DIR = path.join(ROOT_DIR, 'medya');
 const BACKEND_UPLOADS = path.join(__dirname, '..', 'uploads');
 const FRONTEND_UPLOADS = path.join(ROOT_DIR, 'frontend', 'public', 'uploads');
 const DB_FILE = path.join(__dirname, '..', 'database', 'local_db.json');
+const PERSISTENT_DIR = process.env.PERSISTENT_DATA_DIR || path.join(os.homedir(), '.msgroup_data');
+const PERSISTENT_DB_FILE = path.join(PERSISTENT_DIR, 'local_db.json');
 
 function ensureDirs() {
   const dirs = [
@@ -260,10 +263,11 @@ function syncWorkspaceMedia() {
       });
     });
 
+    const activeDbFile = fs.existsSync(PERSISTENT_DB_FILE) ? PERSISTENT_DB_FILE : DB_FILE;
     let storeData = {};
-    if (fs.existsSync(DB_FILE)) {
+    if (fs.existsSync(activeDbFile)) {
       try {
-        storeData = JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+        storeData = JSON.parse(fs.readFileSync(activeDbFile, 'utf8'));
       } catch {
         storeData = {};
       }
@@ -272,13 +276,14 @@ function syncWorkspaceMedia() {
     const existingProjects = Array.isArray(storeData.projects) ? storeData.projects : [];
     const existingMedia = Array.isArray(storeData.media) ? storeData.media : [];
     const hasOldSeed =
-      existingProjects.length < 6 ||
+      existingProjects.length === 0 ||
       existingProjects.some((p) => p.slug === 'sah-vadi-konaklari') ||
-      existingMedia.length < 50;
+      existingMedia.length === 0;
 
-    // Marka adını MŞ Group olarak güncelle
+    // Marka adını MŞ Group ve eski varsayılan telefon numarasını +90 536 869 62 51 olarak güncelle
+    const OLD_DEFAULT_PHONES = ['+90 (212) 555 00 00', '+90 212 555 00 00', '905001234567', '+90 500 123 45 67'];
+    let settingsUpdated = false;
     if (Array.isArray(storeData.settings)) {
-      let settingsUpdated = false;
       for (const s of storeData.settings) {
         if ((s.setting_key === 'site_title' || s.setting_key === 'company_name') && s.setting_value?.includes('Şah Group')) {
           s.setting_value = 'MŞ Group İnşaat Mimarlık';
@@ -288,16 +293,28 @@ function syncWorkspaceMedia() {
           s.setting_value = 'info@msgroup.com';
           settingsUpdated = true;
         }
-      }
-      if (settingsUpdated && !hasOldSeed) {
-        fs.writeFileSync(DB_FILE, JSON.stringify(storeData, null, 2), 'utf8');
+        if ((s.setting_key === 'company_phone' || s.setting_key === 'company_whatsapp') && OLD_DEFAULT_PHONES.includes(s.setting_value)) {
+          s.setting_value = '+90 536 869 62 51';
+          settingsUpdated = true;
+        }
       }
     }
+
+    const saveEverywhere = (data) => {
+      const serialized = JSON.stringify(data, null, 2);
+      try {
+        if (!fs.existsSync(PERSISTENT_DIR)) fs.mkdirSync(PERSISTENT_DIR, { recursive: true });
+        fs.writeFileSync(PERSISTENT_DB_FILE, serialized, 'utf8');
+      } catch {}
+      try {
+        fs.writeFileSync(DB_FILE, serialized, 'utf8');
+      } catch {}
+    };
 
     if (hasOldSeed) {
       storeData.projects = projects;
       storeData.media = media;
-      fs.writeFileSync(DB_FILE, JSON.stringify(storeData, null, 2), 'utf8');
+      saveEverywhere(storeData);
       console.log(`✅ Tüm fotoğraf (${imageFiles.length}) ve videolar (${videoFiles.length}) 'medya/' klasöründe toplandı ve sisteme yüklendi.`);
     } else {
       // Sadece yeni eklenen medya dosyaları varsa mevcut verileri koruyarak ekle
@@ -310,9 +327,11 @@ function syncWorkspaceMedia() {
           addedCount++;
         }
       }
-      if (addedCount > 0) {
-        fs.writeFileSync(DB_FILE, JSON.stringify(storeData, null, 2), 'utf8');
-        console.log(`✅ ${addedCount} yeni medya dosyası 'medya/' klasöründen sisteme eklendi.`);
+      if (addedCount > 0 || settingsUpdated) {
+        saveEverywhere(storeData);
+        if (addedCount > 0) {
+          console.log(`✅ ${addedCount} yeni medya dosyası 'medya/' klasöründen sisteme eklendi.`);
+        }
       }
     }
   } catch (err) {

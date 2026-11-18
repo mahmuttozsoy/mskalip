@@ -172,7 +172,7 @@ INSERT INTO settings (setting_key, setting_value, setting_type, description) VAL
 ('site_title', 'MŞ Group İnşaat Mimarlık', 'text', 'Site başlığı'),
 ('site_description', 'Kalite ve güvenilirliğin adresi - İnşaat ve Mimarlık çözümleri', 'textarea', 'Site açıklaması'),
 ('company_name', 'MŞ Group İnşaat Mimarlık', 'text', 'Şirket adı'),
-('company_phone', '+90 (xxx) xxx xx xx', 'text', 'Şirket telefon numarası'),
+('company_phone', '+90 536 869 62 51', 'text', 'Şirket telefon numarası'),
 ('company_email', 'info@msgroup.com', 'text', 'Şirket e-posta'),
 ('company_address', 'İstanbul, Türkiye', 'text', 'Şirket adresi'),
 ('company_founded', '2010', 'text', 'Kuruluş yılı'),
@@ -181,7 +181,7 @@ INSERT INTO settings (setting_key, setting_value, setting_type, description) VAL
 ('team_size', '100+', 'text', 'Çalışan sayısı'),
 ('facebook_url', '', 'text', 'Facebook URL'),
 ('instagram_url', '', 'text', 'Instagram URL'),
-('whatsapp_number', '', 'text', 'WhatsApp numarası'),
+('whatsapp_number', '+90 536 869 62 51', 'text', 'WhatsApp numarası'),
 ('google_maps_embed', '', 'textarea', 'Google Maps embed kodu')
 ON DUPLICATE KEY UPDATE id=id;
 

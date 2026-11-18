@@ -39,7 +39,7 @@ export default function ContactPage() {
     }
   };
 
-  const phone = settings.company_phone || '+90 (xxx) xxx xx xx';
+  const phone = settings.company_phone || '+90 536 869 62 51';
   const email = settings.company_email || 'info@msgroup.com';
   const address = settings.company_address || 'İstanbul, Türkiye';
 
@@ -148,7 +148,7 @@ export default function ContactPage() {
               </div>
 
               <a
-                href={getWhatsappUrl(settings.whatsapp_number, settings.company_phone)}
+                href={getWhatsappUrl(settings.whatsapp_number || settings.company_whatsapp, phone)}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-primary"

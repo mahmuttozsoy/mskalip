@@ -707,7 +707,11 @@ export default function HomePage() {
                     <div className="contact-item-icon"><Phone size={20} /></div>
                     <div>
                       <h4>Telefon</h4>
-                      <p>{settings.company_phone || '+90 (xxx) xxx xx xx'}</p>
+                      <p>
+                        <a href={`tel:${(settings.company_phone || '+90 536 869 62 51').replace(/\s+/g, '')}`}>
+                          {settings.company_phone || '+90 536 869 62 51'}
+                        </a>
+                      </p>
                     </div>
                   </div>
                   <div className="contact-item">
@@ -801,7 +805,7 @@ export default function HomePage() {
       
       {/* WhatsApp Button */}
       <a
-        href={getWhatsappUrl(settings.whatsapp_number, settings.company_phone)}
+        href={getWhatsappUrl(settings.whatsapp_number || settings.company_whatsapp, settings.company_phone)}
         className="whatsapp-btn"
         target="_blank"
         rel="noreferrer"

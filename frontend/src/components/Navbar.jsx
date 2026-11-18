@@ -15,7 +15,7 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [phone, setPhone] = useState('+90 (212) 555 00 00');
+  const [phone, setPhone] = useState('+90 536 869 62 51');
   const location = useLocation();
 
   useEffect(() => {

@@ -40,9 +40,9 @@ export function getFacebookHandle(input) {
 
 export function getWhatsappNumber(input, fallbackPhone = '') {
   const raw = (input && input.trim()) ? input : fallbackPhone;
-  if (!raw) return '905001234567';
+  if (!raw) return '905368696251';
   let digits = raw.replace(/\D/g, '');
-  if (!digits) return '905001234567';
+  if (!digits) return '905368696251';
   // 05xx xxx xx xx (11 haneli) -> 905xxxxxxxxx
   if (digits.length === 11 && digits.startsWith('0')) {
     digits = '90' + digits.slice(1);

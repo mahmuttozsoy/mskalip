@@ -136,6 +136,12 @@ async function setupMySQLDatabase(conn, config) {
   await conn.query(
     `UPDATE settings SET setting_value = 'info@msgroup.com' WHERE setting_key = 'company_email' AND setting_value = 'info@shahgroup.com'`
   );
+  await conn.query(
+    `UPDATE settings SET setting_value = '+90 536 869 62 51' WHERE setting_key = 'company_phone' AND (setting_value LIKE '%xxx%' OR setting_value LIKE '%555 00 00%' OR setting_value = '')`
+  );
+  await conn.query(
+    `UPDATE settings SET setting_value = '+90 536 869 62 51' WHERE setting_key = 'whatsapp_number' AND (setting_value LIKE '%5001234567%' OR setting_value LIKE '%xxx%' OR setting_value = '')`
+  );
 
   const newPool = mysql.createPool({
     host: config.host || 'localhost',

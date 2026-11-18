@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const path = require('path');
 const fs = require('fs');
+const os = require('os');
 let sharp = null;
 try {
   sharp = require('sharp');
@@ -9,6 +10,9 @@ try {
 const db = require('../config/database');
 const { authenticateToken } = require('../middleware/auth');
 const upload = require('../middleware/upload');
+
+const BACKEND_UPLOADS = path.join(__dirname, '..', 'uploads');
+const PERSISTENT_UPLOADS = path.join(process.env.PERSISTENT_DATA_DIR || path.join(os.homedir(), '.msgroup_data'), 'uploads');
 
 // Medya yükle
 router.post('/upload', authenticateToken, upload.array('files', 50), async (req, res) => {
@@ -18,65 +22,93 @@ router.post('/upload', authenticateToken, upload.array('files', 50), async (req,
 
     for (const file of req.files) {
       const isVideo = file.mimetype.startsWith('video/');
-      let filePath = file.path.replace(/\\/g, '/');
+      let filePath = `uploads/${isVideo ? 'videos' : 'images'}/${file.filename}`;
       let thumbnailPath = null;
       let width = null;
       let height = null;
 
       if (!isVideo) {
         // Görüntüyü optimize et ve thumbnail oluştur
-        const imageDir = 'uploads/images';
-        const thumbDir = 'uploads/thumbnails';
-        
-        if (!fs.existsSync(imageDir)) fs.mkdirSync(imageDir, { recursive: true });
-        if (!fs.existsSync(thumbDir)) fs.mkdirSync(thumbDir, { recursive: true });
+        const absImageDir = path.join(BACKEND_UPLOADS, 'images');
+        const absThumbDir = path.join(BACKEND_UPLOADS, 'thumbnails');
+        if (!fs.existsSync(absImageDir)) fs.mkdirSync(absImageDir, { recursive: true });
+        if (!fs.existsSync(absThumbDir)) fs.mkdirSync(absThumbDir, { recursive: true });
 
         const fileName = path.basename(file.filename, path.extname(file.filename));
-        const optimizedPath = `${imageDir}/${fileName}.webp`;
-        const thumbPath = `${thumbDir}/${fileName}_thumb.webp`;
+        const absOptimizedPath = path.join(absImageDir, `${fileName}.webp`);
+        const absThumbPath = path.join(absThumbDir, `${fileName}_thumb.webp`);
+        const relOptimizedPath = `uploads/images/${fileName}.webp`;
+        const relThumbPath = `uploads/thumbnails/${fileName}_thumb.webp`;
 
         try {
-          const metadata = await sharp(file.path).metadata();
-          width = metadata.width;
-          height = metadata.height;
+          if (sharp) {
+            const metadata = await sharp(file.path).metadata();
+            width = metadata.width;
+            height = metadata.height;
 
-          // Optimize et
-          await sharp(file.path)
-            .resize(1920, 1080, { fit: 'inside', withoutEnlargement: true })
-            .webp({ quality: 85 })
-            .toFile(optimizedPath);
+            // Optimize et
+            await sharp(file.path)
+              .resize(1920, 1080, { fit: 'inside', withoutEnlargement: true })
+              .webp({ quality: 85 })
+              .toFile(absOptimizedPath);
 
-          // Thumbnail
-          await sharp(file.path)
-            .resize(400, 300, { fit: 'cover' })
-            .webp({ quality: 75 })
-            .toFile(thumbPath);
+            // Thumbnail
+            await sharp(file.path)
+              .resize(400, 300, { fit: 'cover' })
+              .webp({ quality: 75 })
+              .toFile(absThumbPath);
 
-          // Orijinal temp dosyayı sil
-          fs.unlinkSync(file.path);
-          
-          filePath = optimizedPath;
-          thumbnailPath = thumbPath;
+            // Orijinal temp dosyayı sil
+            try { fs.unlinkSync(file.path); } catch {}
+          } else {
+            fs.copyFileSync(file.path, absOptimizedPath);
+            fs.copyFileSync(file.path, absThumbPath);
+            try { fs.unlinkSync(file.path); } catch {}
+          }
 
-          // Frontend public/uploads klasörüne de kopyala
-          try {
-            const frontImgDir = path.join(__dirname, '..', '..', 'frontend', 'public', imageDir);
-            const frontThumbDir = path.join(__dirname, '..', '..', 'frontend', 'public', thumbDir);
-            fs.mkdirSync(frontImgDir, { recursive: true });
-            fs.mkdirSync(frontThumbDir, { recursive: true });
-            fs.copyFileSync(optimizedPath, path.join(frontImgDir, path.basename(optimizedPath)));
-            fs.copyFileSync(thumbPath, path.join(frontThumbDir, path.basename(thumbPath)));
-          } catch {}
+          filePath = relOptimizedPath;
+          thumbnailPath = relThumbPath;
+
+          // Kalıcı sunucu dizinine ve Frontend public/uploads klasörüne de kopyala
+          const targetRoots = [
+            PERSISTENT_UPLOADS,
+            path.join(__dirname, '..', '..', 'frontend', 'public', 'uploads'),
+            path.join(__dirname, '..', '..', 'frontend', 'dist', 'uploads'),
+          ];
+          for (const root of targetRoots) {
+            try {
+              const tImg = path.join(root, 'images');
+              const tThumb = path.join(root, 'thumbnails');
+              fs.mkdirSync(tImg, { recursive: true });
+              fs.mkdirSync(tThumb, { recursive: true });
+              fs.copyFileSync(absOptimizedPath, path.join(tImg, path.basename(absOptimizedPath)));
+              fs.copyFileSync(absThumbPath, path.join(tThumb, path.basename(absThumbPath)));
+            } catch {}
+          }
         } catch (sharpErr) {
           console.error('Sharp hatası:', sharpErr);
-          filePath = file.path;
+          const fallbackAbs = path.join(absImageDir, file.filename);
+          try {
+            fs.copyFileSync(file.path, fallbackAbs);
+            fs.unlinkSync(file.path);
+          } catch {}
+          filePath = `uploads/images/${file.filename}`;
+          thumbnailPath = filePath;
         }
       } else {
-        try {
-          const frontVidDir = path.join(__dirname, '..', '..', 'frontend', 'public', 'uploads', 'videos');
-          fs.mkdirSync(frontVidDir, { recursive: true });
-          fs.copyFileSync(file.path, path.join(frontVidDir, path.basename(filePath)));
-        } catch {}
+        filePath = `uploads/videos/${file.filename}`;
+        const targetRoots = [
+          PERSISTENT_UPLOADS,
+          path.join(__dirname, '..', '..', 'frontend', 'public', 'uploads'),
+          path.join(__dirname, '..', '..', 'frontend', 'dist', 'uploads'),
+        ];
+        for (const root of targetRoots) {
+          try {
+            const tVid = path.join(root, 'videos');
+            fs.mkdirSync(tVid, { recursive: true });
+            fs.copyFileSync(file.path, path.join(tVid, file.filename));
+          } catch {}
+        }
       }
 
       const [result] = await db.query(

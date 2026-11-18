@@ -1,8 +1,11 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const bcrypt = require('bcryptjs');
 
-const DB_FILE = path.join(__dirname, '..', 'database', 'local_db.json');
+const SEED_DB_FILE = path.join(__dirname, '..', 'database', 'local_db.json');
+const PERSISTENT_DIR = path.join(os.homedir(), '.msgroup_data');
+const PERSISTENT_DB_FILE = path.join(PERSISTENT_DIR, 'local_db.json');
 
 function getDefaultData() {
   const passwordHash = bcrypt.hashSync('Admin123!', 10);
@@ -144,7 +147,7 @@ function getDefaultData() {
       { id: 1, setting_key: 'site_title', setting_value: 'MŞ Group İnşaat Mimarlık', setting_type: 'text' },
       { id: 2, setting_key: 'site_description', setting_value: 'Kalite ve güvenilirliğin adresi - İnşaat ve Mimarlık çözümleri', setting_type: 'textarea' },
       { id: 3, setting_key: 'company_name', setting_value: 'MŞ Group İnşaat Mimarlık', setting_type: 'text' },
-      { id: 4, setting_key: 'company_phone', setting_value: '+90 (212) 555 00 00', setting_type: 'text' },
+      { id: 4, setting_key: 'company_phone', setting_value: '+90 536 869 62 51', setting_type: 'text' },
       { id: 5, setting_key: 'company_email', setting_value: 'info@msgroup.com', setting_type: 'text' },
       { id: 6, setting_key: 'company_address', setting_value: 'İstanbul, Türkiye', setting_type: 'text' },
       { id: 7, setting_key: 'company_founded', setting_value: '2010', setting_type: 'text' },
@@ -153,7 +156,7 @@ function getDefaultData() {
       { id: 10, setting_key: 'team_size', setting_value: '100+', setting_type: 'text' },
       { id: 11, setting_key: 'facebook_url', setting_value: '', setting_type: 'text' },
       { id: 12, setting_key: 'instagram_url', setting_value: '', setting_type: 'text' },
-      { id: 13, setting_key: 'whatsapp_number', setting_value: '905001234567', setting_type: 'text' },
+      { id: 13, setting_key: 'whatsapp_number', setting_value: '+90 536 869 62 51', setting_type: 'text' },
       { id: 14, setting_key: 'google_maps_embed', setting_value: '', setting_type: 'textarea' },
     ],
     stats: [
@@ -166,25 +169,66 @@ function getDefaultData() {
   };
 }
 
+function normalizePhoneSettings(store) {
+  if (!store || !Array.isArray(store.settings)) return store;
+  let changed = false;
+  for (const s of store.settings) {
+    if (
+      s.setting_key === 'company_phone' &&
+      (!s.setting_value || s.setting_value.includes('555 00 00') || s.setting_value.includes('xxx'))
+    ) {
+      s.setting_value = '+90 536 869 62 51';
+      changed = true;
+    }
+    if (
+      s.setting_key === 'whatsapp_number' &&
+      (!s.setting_value || s.setting_value.includes('5001234567') || s.setting_value.includes('xxx'))
+    ) {
+      s.setting_value = '+90 536 869 62 51';
+      changed = true;
+    }
+  }
+  if (changed) {
+    saveStore(store);
+  }
+  return store;
+}
+
 function loadStore() {
   try {
-    const dir = path.dirname(DB_FILE);
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-    if (!fs.existsSync(DB_FILE)) {
-      const initial = getDefaultData();
-      fs.writeFileSync(DB_FILE, JSON.stringify(initial, null, 2), 'utf8');
-      return initial;
+    // 1. Önce kalıcı dizindeki (os.homedir()/.msgroup_data/local_db.json) veritabanına bak (Hostinger deploylarında silinmez!)
+    if (fs.existsSync(PERSISTENT_DB_FILE)) {
+      const data = JSON.parse(fs.readFileSync(PERSISTENT_DB_FILE, 'utf8'));
+      return normalizePhoneSettings(data);
     }
-    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+
+    // 2. Kalıcı dizinde yoksa proje içindeki local_db.json'dan oku ve kalıcı dizine kopyala
+    if (fs.existsSync(SEED_DB_FILE)) {
+      const seedData = JSON.parse(fs.readFileSync(SEED_DB_FILE, 'utf8'));
+      const normalized = normalizePhoneSettings(seedData);
+      saveStore(normalized);
+      return normalized;
+    }
+
+    const initial = getDefaultData();
+    saveStore(initial);
+    return initial;
   } catch {
     return getDefaultData();
   }
 }
 
 function saveStore(data) {
-  const dir = path.dirname(DB_FILE);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2), 'utf8');
+  const jsonStr = JSON.stringify(data, null, 2);
+  try {
+    if (!fs.existsSync(PERSISTENT_DIR)) fs.mkdirSync(PERSISTENT_DIR, { recursive: true });
+    fs.writeFileSync(PERSISTENT_DB_FILE, jsonStr, 'utf8');
+  } catch {}
+  try {
+    const seedDir = path.dirname(SEED_DB_FILE);
+    if (!fs.existsSync(seedDir)) fs.mkdirSync(seedDir, { recursive: true });
+    fs.writeFileSync(SEED_DB_FILE, jsonStr, 'utf8');
+  } catch {}
 }
 
 function nextId(list) {

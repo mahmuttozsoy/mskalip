@@ -16,12 +16,12 @@ export default function Footer() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const phone = settings.company_phone || '+90 (xxx) xxx xx xx';
+  const phone = settings.company_phone || '+90 536 869 62 51';
   const email = settings.company_email || 'info@msgroup.com';
   const address = settings.company_address || 'İstanbul, Türkiye';
   const igUrl = getInstagramUrl(settings.instagram_url);
   const fbUrl = getFacebookUrl(settings.facebook_url);
-  const waUrl = getWhatsappUrl(settings.whatsapp_number, settings.company_phone);
+  const waUrl = getWhatsappUrl(settings.whatsapp_number || settings.company_whatsapp, phone);
   
   return (
     <footer className="footer">
@@ -88,7 +88,7 @@ export default function Footer() {
               <div className="footer-contact-item">
                 <Phone size={16} />
                 <div>
-                  <span>{phone}</span>
+                  <a href={`tel:${phone.replace(/\s+/g, '')}`} style={{ color: 'inherit' }}>{phone}</a>
                 </div>
               </div>
               <div className="footer-contact-item">

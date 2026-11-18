@@ -22,8 +22,12 @@ export default function AdminSettings() {
       .get('/settings')
       .then((r) => {
         const raw = r.data.settings || {};
+        const waVal = raw.whatsapp_number || raw.company_whatsapp || raw.company_phone || '+90 536 869 62 51';
         setSettings({
           ...raw,
+          company_phone: raw.company_phone || '+90 536 869 62 51',
+          whatsapp_number: waVal,
+          company_whatsapp: waVal,
           instagram_url: getInstagramHandle(raw.instagram_url),
           facebook_url: getFacebookHandle(raw.facebook_url),
         });
@@ -35,8 +39,11 @@ export default function AdminSettings() {
   const handleSave = async () => {
     setSaving(true);
     try {
+      const waVal = settings.whatsapp_number || settings.company_whatsapp || settings.company_phone || '+90 536 869 62 51';
       const payload = {
         ...settings,
+        whatsapp_number: waVal,
+        company_whatsapp: waVal,
         instagram_url: getInstagramUrl(settings.instagram_url),
         facebook_url: getFacebookUrl(settings.facebook_url),
       };

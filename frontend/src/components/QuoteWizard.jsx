@@ -130,7 +130,7 @@ export default function QuoteWizard() {
   };
 
   const getWhatsAppDirectLink = () => {
-    const baseWa = getWhatsappUrl(settings.whatsapp_number, settings.company_phone);
+    const baseWa = getWhatsappUrl(settings.whatsapp_number || settings.company_whatsapp, settings.company_phone || '+90 536 869 62 51');
     const text = `Merhaba MŞ Group, web sitenizdeki Teklif Sihirbazı üzerinden fiyat teklifi almak istiyorum:\n\n👤 Ad Soyad: ${data.name}\n📞 Telefon: ${data.phone}\n${buildSummaryText()}`;
     return `${baseWa}?text=${encodeURIComponent(text)}`;
   };
