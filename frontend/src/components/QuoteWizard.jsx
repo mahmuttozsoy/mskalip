@@ -144,10 +144,10 @@ export default function QuoteWizard() {
   return (
     <div
       style={{
-        background: 'linear-gradient(145deg, #151528 0%, #1a1a2e 100%)',
+        background: 'linear-gradient(145deg, #0B1221 0%, #152238 100%)',
         borderRadius: '24px',
-        border: '1px solid rgba(184,134,11,0.35)',
-        boxShadow: '0 24px 70px rgba(0,0,0,0.25)',
+        border: '1px solid rgba(200, 157, 40, 0.4)',
+        boxShadow: '0 24px 70px rgba(13, 21, 38, 0.28)',
         overflow: 'hidden',
         color: 'white',
       }}
