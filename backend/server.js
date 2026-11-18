@@ -98,9 +98,9 @@ app.listen(PORT, () => {
   console.log(`✅ MŞ Group sunucusu port ${PORT}'de çalışıyor`);
 });
 
-// Veritabanı ve medya senkronizasyonunu arka planda başlat
-initDatabase().catch((err) => {
-  console.error('Veritabanı başlatma uyarısı:', err.message);
-});
+  // Veritabanı ve medya senkronizasyonunu arka planda başlat
+  initDatabase().catch((err) => {
+    console.error('Veritabanı başlatma uyarısı:', err.message);
+  });
 
-module.exports = app;
+  module.exports = app;
