@@ -142,7 +142,7 @@ CREATE TABLE IF NOT EXISTS stats (
 
 -- Varsayılan yönetici kaydı
 INSERT INTO admins (username, email, password, full_name, role) VALUES 
-('admin', 'admin@msgroup.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Sistem Yöneticisi', 'super_admin')
+('admin', 'admin@msgroup.com', '$2b$10$0Gi15XV0tO/srGEGB/J0EOM3RKXCdLJA6QhKs7Ziec.kLBz4Ttxbu', 'Sistem Yöneticisi', 'super_admin')
 ON DUPLICATE KEY UPDATE id=id;
 
 -- Varsayılan kategoriler

@@ -20,10 +20,8 @@ let currentDbState = {
 };
 
 async function tryConnectWithPasswords() {
-  const configuredPassword = process.env.DB_PASSWORD || 'Mahmut.21';
-  const candidates = configuredPassword
-    ? [configuredPassword, 'Mahmut.21', '']
-    : ['Mahmut.21', ''];
+  const configuredPassword = process.env.DB_PASSWORD || '';
+  const candidates = configuredPassword ? [configuredPassword, ''] : [''];
 
   for (const pwd of candidates) {
     try {
@@ -114,12 +112,12 @@ async function setupMySQLDatabase(conn, config) {
   }
 
   const [admins] = await conn.query('SELECT * FROM admins WHERE username = ?', ['admin']);
-  const defaultHash = await bcrypt.hash('Admin123!', 10);
+  const defaultHash = '$2b$10$0Gi15XV0tO/srGEGB/J0EOM3RKXCdLJA6QhKs7Ziec.kLBz4Ttxbu';
 
   if (admins.length === 0) {
     await conn.query(
       'INSERT INTO admins (username, email, password, full_name, role) VALUES (?, ?, ?, ?, ?)',
-      ['admin', 'admin@shahgroup.com', defaultHash, 'Sistem Yöneticisi', 'super_admin']
+      ['admin', 'admin@msgroup.com', defaultHash, 'Sistem Yöneticisi', 'super_admin']
     );
   } else if (admins[0].password === '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi') {
     await conn.query('UPDATE admins SET password = ? WHERE id = ?', [defaultHash, admins[0].id]);

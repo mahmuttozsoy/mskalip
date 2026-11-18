@@ -8,7 +8,7 @@ const PERSISTENT_DIR = path.join(os.homedir(), '.msgroup_data');
 const PERSISTENT_DB_FILE = path.join(PERSISTENT_DIR, 'local_db.json');
 
 function getDefaultData() {
-  const passwordHash = bcrypt.hashSync('Admin123!', 10);
+  const passwordHash = '$2b$10$0Gi15XV0tO/srGEGB/J0EOM3RKXCdLJA6QhKs7Ziec.kLBz4Ttxbu';
   const now = new Date().toISOString();
 
   return {
