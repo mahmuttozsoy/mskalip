@@ -302,7 +302,7 @@ export default function AdminContent() {
               />
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+            <div className="admin-grid-3">
               <div className="admin-form-group">
                 <label>Ana Başlık (1. Satır)</label>
                 <input
@@ -433,7 +433,7 @@ export default function AdminContent() {
             <h3 style={{ color: 'var(--color-primary)', fontSize: '15px', fontWeight: 700, margin: '28px 0 16px' }}>
               Güven & Kalite Şeridi Maddeleri (Hero Altı)
             </h3>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+            <div className="admin-grid-2">
               {[1, 2, 3, 4].map((n) => (
                 <div key={n} className="admin-form-group" style={{ marginBottom: 0 }}>
                   <label>{n}. Madde</label>
@@ -645,7 +645,7 @@ export default function AdminContent() {
             {showCatForm && (
               <div className="admin-form" style={{ marginBottom: '20px' }}>
                 <form onSubmit={handleSaveCategory}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 120px', gap: '16px' }}>
+                  <div className="admin-grid-3">
                     <div className="admin-form-group">
                       <label>Kategori Adı *</label>
                       <input

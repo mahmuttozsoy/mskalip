@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, LayoutTemplate, FolderOpen, Wrench, Image, MessageSquare, Settings,
-  LogOut, ExternalLink
+  LogOut, ExternalLink, Menu, X
 } from 'lucide-react';
 import api from '../../lib/api';
 
@@ -22,8 +22,10 @@ export default function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [unread, setUnread] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
+    setSidebarOpen(false);
     api.get('/contact').then(r => setUnread(r.data.unread || 0)).catch(() => {});
   }, [location.pathname]);
 
@@ -39,13 +41,78 @@ export default function AdminLayout() {
 
   return (
     <div className="admin-layout">
+      {/* Mobile Header Bar (Only visible on <= 768px) */}
+      <div className="admin-mobile-header">
+        <button
+          type="button"
+          className="admin-mobile-menu-btn"
+          onClick={() => setSidebarOpen(o => !o)}
+          aria-label="Menüyü Aç"
+        >
+          {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+          <span>Menü</span>
+        </button>
+
+        <Link to="/admin" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <img src="/logo.png" alt="MŞ Group" style={{ height: '42px', width: 'auto' }} />
+        </Link>
+
+        <Link
+          to="/admin/mesajlar"
+          style={{
+            position: 'relative',
+            color: 'white',
+            padding: '8px',
+            borderRadius: '8px',
+            background: 'rgba(255,255,255,0.06)',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
+          <MessageSquare size={20} />
+          {unread > 0 && (
+            <span
+              style={{
+                position: 'absolute',
+                top: '-4px',
+                right: '-4px',
+                background: '#ef4444',
+                color: 'white',
+                fontSize: '10px',
+                fontWeight: 700,
+                padding: '1px 5px',
+                borderRadius: '50px',
+              }}
+            >
+              {unread}
+            </span>
+          )}
+        </Link>
+      </div>
+
+      {/* Mobile Backdrop */}
+      {sidebarOpen && (
+        <div
+          className="admin-sidebar-backdrop"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
-      <aside className="admin-sidebar">
-        <div className="admin-sidebar-header">
+      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <div className="admin-sidebar-header" style={{ position: 'relative' }}>
           <Link to="/admin" className="logo" style={{ flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '8px' }}>
             <img src="/logo.png" alt="MŞ Group İnşaat" className="admin-sidebar-logo-img" />
             <div className="site-panel">Yönetim Paneli</div>
           </Link>
+          <button
+            type="button"
+            className="admin-sidebar-close-btn"
+            onClick={() => setSidebarOpen(false)}
+            aria-label="Menüyü Kapat"
+          >
+            <X size={20} />
+          </button>
         </div>
 
         <nav className="admin-nav">

@@ -291,7 +291,7 @@ export default function AdminProjects() {
                 </div>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+              <div className="admin-grid-3">
                 <div className="admin-form-group">
                   <label>Konum</label>
                   <input

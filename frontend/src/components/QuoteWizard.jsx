@@ -154,6 +154,7 @@ export default function QuoteWizard() {
     >
       {/* Top Progress Header */}
       <div
+        className="quote-wizard-header"
         style={{
           background: 'rgba(0,0,0,0.25)',
           padding: '24px 32px',
@@ -233,7 +234,7 @@ export default function QuoteWizard() {
       </div>
 
       {/* Wizard Body */}
-      <div style={{ padding: '32px' }}>
+      <div className="quote-wizard-body" style={{ padding: '32px' }}>
         {submitted ? (
           <div style={{ textAlign: 'center', padding: '24px 12px' }}>
             <div

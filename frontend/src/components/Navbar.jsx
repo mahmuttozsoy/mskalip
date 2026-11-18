@@ -67,6 +67,14 @@ export default function Navbar() {
                 <Phone size={14} />
                 Bizi Arayın
               </a>
+              <a
+                href={`tel:${phone.replace(/\s+/g, '')}`}
+                className="navbar-mobile-call-btn"
+                aria-label="Hemen Ara"
+                title="Hemen Ara"
+              >
+                <Phone size={18} />
+              </a>
               <button
                 className="navbar-toggle"
                 onClick={() => setMenuOpen(o => !o)}

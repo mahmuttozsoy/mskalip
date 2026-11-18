@@ -71,9 +71,9 @@ export default function AdminMessages() {
       </div>
 
       <div className="admin-content">
-        <div style={{ display: 'grid', gridTemplateColumns: selected ? '1fr 1.2fr' : '1fr', gap: '20px' }}>
+        <div className={`admin-messages-grid ${selected ? 'has-selected' : ''}`}>
           {/* Message List */}
-          <div className="admin-table-card">
+          <div className={`admin-table-card ${selected ? 'hide-on-mobile' : ''}`}>
             {loading ? (
               <div style={{ padding: '40px', textAlign: 'center', color: 'rgba(255,255,255,0.4)' }}>Yükleniyor...</div>
             ) : messages.length === 0 ? (
@@ -122,8 +122,16 @@ export default function AdminMessages() {
 
           {/* Message Detail */}
           {selected && (
-            <div className="admin-table-card" style={{ padding: '28px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px' }}>
+            <div className="admin-table-card" style={{ padding: '24px' }}>
+              <button
+                type="button"
+                className="admin-btn admin-btn-secondary admin-btn-sm"
+                onClick={() => setSelected(null)}
+                style={{ marginBottom: '16px' }}
+              >
+                ← Mesaj Listesine Dön
+              </button>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
                 <div>
                   <h3 style={{ color: 'white', fontSize: '18px', fontWeight: 700 }}>{selected.name}</h3>
                   {selected.subject && (

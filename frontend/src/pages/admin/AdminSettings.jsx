@@ -117,7 +117,7 @@ export default function AdminSettings() {
             Şirket & İletişim Bilgileri
           </h3>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+          <div className="admin-grid-2">
             <div className="admin-form-group">
               <label>Şirket Adı</label>
               <input
@@ -158,7 +158,7 @@ export default function AdminSettings() {
               />
             </div>
 
-            <div className="admin-form-group" style={{ gridColumn: 'span 2' }}>
+            <div className="admin-form-group admin-col-span-2">
               <label>Merkez Ofis Adresi</label>
               <textarea
                 rows={2}
@@ -190,7 +190,7 @@ export default function AdminSettings() {
             Link kopyalamanıza gerek yoktur; yalnızca <strong>kullanıcı adınızı</strong> ve <strong>telefon numaranızı</strong> yazın, sistem otomatik olarak bağlar.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+          <div className="admin-grid-3">
             {/* WhatsApp */}
             <div className="admin-form-group">
               <label>WhatsApp Telefon Numarası</label>
@@ -341,7 +341,7 @@ export default function AdminSettings() {
             Güvenlik & Yönetici Şifresi Değiştir
           </h3>
           <form onSubmit={handlePasswordChange}>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+            <div className="admin-grid-3">
               <div className="admin-form-group">
                 <label>Mevcut Şifre</label>
                 <input
