@@ -205,7 +205,7 @@ export default function HomePage() {
             <div className="hero-content">
               <div className="hero-badge">
                 <Star size={12} />
-                {settings.hero_badge || "Türkiye'nin Güvenilir İnşaat Firması"}
+                {settings.hero_badge || 'Çelik Kalıp & Betonarme Yapı Sistemlerinde Lider'}
               </div>
               
               <h1 className="hero-title">
@@ -216,7 +216,7 @@ export default function HomePage() {
               
               <p className="hero-description">
                 {settings.hero_description ||
-                  'MŞ Group İnşaat Mimarlık olarak 15 yılı aşkın deneyimimizle konut, ticari ve mimarlık projelerinde hayallerinizi gerçeğe dönüştürüyoruz.'}
+                  'MŞ Group İnşaat Mimarlık olarak yüksek dayanımlı çelik kalıp sistemleri, betonarme kaba inşaat, ağır demir donatı ve anahtar teslim yapı projelerinde 15 yılı aşkın uzmanlığımızla hizmet veriyoruz.'}
               </p>
               
               <div className="hero-actions">
@@ -324,10 +324,10 @@ export default function HomePage() {
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around', flexWrap: 'wrap', gap: '18px' }}>
             {[
-              { icon: <CheckCircle size={17} />, text: settings.strip_item_1 || 'ISO 9001 Kalite Sertifikası' },
-              { icon: <Star size={17} />, text: settings.strip_item_2 || 'Ödüllü Mimarlık & Mühendislik' },
-              { icon: <Users size={17} />, text: settings.strip_item_3 || '100+ Uzman Teknik Kadro' },
-              { icon: <CheckCircle size={17} />, text: settings.strip_item_4 || 'Zamanında Teslimat Garantisi' },
+              { icon: <Layers size={17} />, text: settings.strip_item_1 || 'Endüstriyel Çelik Kalıp Sistemleri' },
+              { icon: <CheckCircle size={17} />, text: settings.strip_item_2 || 'ISO 9001 & Deprem Yönetmeliğine Tam Uyum' },
+              { icon: <Users size={17} />, text: settings.strip_item_3 || '100+ Uzman Saha & Mühendis Kadrosu' },
+              { icon: <Star size={17} />, text: settings.strip_item_4 || 'Pürüzsüz Brüt Beton & Zamanında Teslim' },
             ].map((item, i) => (
               <div
                 key={i}
@@ -425,6 +425,193 @@ export default function HomePage() {
               </div>
             </AnimateSection>
           </div>
+        </div>
+      </section>
+
+      {/* ===== ÇELİK KALIP ÖZEL VURGU BÖLÜMÜ ===== */}
+      <section
+        style={{
+          background: 'linear-gradient(135deg, #090F1D 0%, #131F36 55%, #0B1324 100%)',
+          padding: '80px 0',
+          borderTop: '1px solid rgba(200, 157, 40, 0.28)',
+          borderBottom: '1px solid rgba(200, 157, 40, 0.28)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div className="container">
+          <AnimateSection>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))',
+                gap: '48px',
+                alignItems: 'center',
+              }}
+            >
+              <div>
+                <div
+                  className="section-tag"
+                  style={{
+                    color: 'var(--color-primary-light)',
+                    background: 'rgba(200, 157, 40, 0.18)',
+                    borderColor: 'rgba(229, 188, 70, 0.45)',
+                    marginBottom: '18px',
+                  }}
+                >
+                  <Layers size={13} /> Temel Uzmanlık Alanımız
+                </div>
+                <h2
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: 'clamp(1.9rem, 3.6vw, 2.75rem)',
+                    fontWeight: 800,
+                    color: 'white',
+                    lineHeight: 1.2,
+                    marginBottom: '18px',
+                  }}
+                >
+                  Endüstriyel <span style={{ color: 'var(--color-primary-light)' }}>Çelik Kalıp Sistemleri</span>{' '}
+                  <span style={{ fontFamily: 'var(--font-primary)', fontWeight: 700 }}>&amp;</span> Ağır Betonarme Uygulamaları
+                </h2>
+                <p style={{ color: 'rgba(255,255,255,0.78)', fontSize: '15px', lineHeight: 1.8, marginBottom: '24px' }}>
+                  <strong>MŞ Group İnşaat (MŞ Kalıp)</strong> olarak yüksek basınca dayanıklı <strong>çelik kalıp sistemleri</strong>,
+                  vinç destekli modüler ve tünel çelik kalıp montajı, yüksek kotlu perde beton, istinat duvarı ve radye temel
+                  imalatlarında milimetrik ölçü hassasiyeti ve pürüzsüz brüt beton yüzey kalitesi sunuyoruz.
+                </p>
+
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+                    gap: '14px',
+                    marginBottom: '28px',
+                  }}
+                >
+                  {[
+                    {
+                      title: 'Perde & Kolon Çelik Kalıp',
+                      desc: 'Yüksek mukavemetli çelik yüzeyli kalıplarla hatasız, pürüzsüz brüt beton imalatı',
+                    },
+                    {
+                      title: 'Tünel & Modüler Çelik Kalıp',
+                      desc: 'Toplu konut ve çok bloklu şantiyelerde hızlı kurulum ve yüksek kat çevrim hızı',
+                    },
+                    {
+                      title: 'Yüksek İstinat & Altyapı Kalıbı',
+                      desc: 'Ağır beton yüküne dayanıklı özel kuşaklı çelik kalıp ve altyapı galerisi çözümleri',
+                    },
+                    {
+                      title: 'Ağır Demir Donatı & Radye Temel',
+                      desc: 'Statik projeye birebir uyumlu nervürlü çelik donatı ve kesintisiz temel dökümü',
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.04)',
+                        border: '1px solid rgba(200, 157, 40, 0.28)',
+                        borderRadius: '14px',
+                        padding: '16px',
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '8px',
+                          color: 'var(--color-primary-light)',
+                          fontWeight: 700,
+                          fontSize: '14px',
+                          marginBottom: '6px',
+                        }}
+                      >
+                        <CheckCircle size={16} />
+                        <span>{item.title}</span>
+                      </div>
+                      <p style={{ color: 'rgba(255,255,255,0.68)', fontSize: '12.5px', lineHeight: 1.55, margin: 0 }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
+                  <a href="#teklif-sihirbazi" className="btn btn-primary">
+                    Çelik Kalıp Teklifi Alın <ArrowRight size={17} />
+                  </a>
+                  <Link to="/galeri" className="btn btn-outline">
+                    Şantiye Çelik Kalıp Galerisi
+                  </Link>
+                </div>
+              </div>
+
+              {/* Sağ Görsel Vitrin */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                <div
+                  style={{
+                    gridColumn: 'span 2',
+                    borderRadius: '18px',
+                    overflow: 'hidden',
+                    aspectRatio: '16/9',
+                    border: '2px solid rgba(200, 157, 40, 0.45)',
+                    boxShadow: '0 20px 50px rgba(0,0,0,0.45)',
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    src="/uploads/images/sah-photo-089.jpg"
+                    alt="MŞ Group Çelik Kalıp ve Perde Beton Uygulaması"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '12px',
+                      left: '12px',
+                      background: 'rgba(9, 15, 29, 0.88)',
+                      border: '1px solid rgba(229, 188, 70, 0.45)',
+                      color: 'var(--color-primary-light)',
+                      padding: '6px 14px',
+                      borderRadius: '50px',
+                      fontSize: '12px',
+                      fontWeight: 700,
+                    }}
+                  >
+                    Endüstriyel Çelik Kalıp & Perde Beton Sahamız
+                  </div>
+                </div>
+                <div
+                  style={{
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    aspectRatio: '4/3',
+                    border: '1px solid rgba(255,255,255,0.16)',
+                  }}
+                >
+                  <img
+                    src="/uploads/images/sah-photo-067.jpg"
+                    alt="Vinç Destekli Çelik Kalıp Montajı"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+                <div
+                  style={{
+                    borderRadius: '14px',
+                    overflow: 'hidden',
+                    aspectRatio: '4/3',
+                    border: '1px solid rgba(255,255,255,0.16)',
+                  }}
+                >
+                  <img
+                    src="/uploads/images/sah-photo-144.jpg"
+                    alt="Ağır Demir Donatı ve Çelik Kalıp"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  />
+                </div>
+              </div>
+            </div>
+          </AnimateSection>
         </div>
       </section>
 

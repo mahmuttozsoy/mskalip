@@ -22,6 +22,21 @@ const serviceIcons = {
 
 const defaultServices = [
   {
+    id: 0,
+    title: 'Çelik Kalıp & Endüstriyel Kalıp Sistemleri',
+    slug: 'celik-kalip-sistemleri',
+    short_description: 'Yüksek dayanımlı çelik kalıp ile pürüzsüz brüt beton uygulamaları',
+    description:
+      'MŞ Group İnşaat (MŞ Kalıp) uzmanlığıyla; toplu konut, yüksek istinat duvarı, perde beton, kolon ve altyapı galerisi projelerinde ağır hizmet tipi endüstriyel çelik kalıp, tünel kalıp ve modüler kalıp sistemleri uyguluyoruz. Vinç destekli hızlı montaj ve yüksek basınç dayanımıyla pürüzsüz brüt beton yüzeyler elde ediyoruz.',
+    icon: 'layers',
+    features: [
+      'Perde, Kolon ve Dairesel Çelik Kalıp Sistemleri',
+      'Tünel Kalıp & Vinç Destekli Modüler Çelik Kalıp',
+      'Pürüzsüz Brüt Beton Yüzey & Milimetrik Hassasiyet',
+      'Yüksek Kotlu İstinat Duvarı ve Altyapı Çelik Kalıpları',
+    ],
+  },
+  {
     id: 1,
     title: 'Konut İnşaatı',
     slug: 'konut-insaati',
@@ -117,7 +132,9 @@ export default function ServicesPage() {
       .catch(() => setServices(defaultServices));
   }, []);
 
-  const displayServices = services.length > 0 ? services : defaultServices;
+  const rawServices = services.length > 0 ? services : defaultServices;
+  const hasSteelFormwork = rawServices.some((s) => /çelik kalıp/i.test(s.title || ''));
+  const displayServices = hasSteelFormwork ? rawServices : [defaultServices[0], ...rawServices];
 
   return (
     <>

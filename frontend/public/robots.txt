@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/auth
+
+Sitemap: https://mskalip.com/sitemap.xml

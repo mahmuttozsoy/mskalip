@@ -72,12 +72,12 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Hizmetlerimiz</h4>
             <nav className="footer-links">
-              <Link to="/hizmetler">Konut İnşaatı</Link>
-              <Link to="/hizmetler">Ticari İnşaat</Link>
-              <Link to="/hizmetler">Mimarlık & Tasarım</Link>
-              <Link to="/hizmetler">Restorasyon</Link>
-              <Link to="/hizmetler">İç Mimari</Link>
-              <Link to="/hizmetler">Altyapı Çalışmaları</Link>
+              <Link to="/hizmetler">Çelik Kalıp Sistemleri</Link>
+              <Link to="/hizmetler">Betonarme &amp; Kaba İnşaat</Link>
+              <Link to="/hizmetler">Perde Beton &amp; İstinat Duvarı</Link>
+              <Link to="/hizmetler">Konut &amp; Ticari İnşaat</Link>
+              <Link to="/hizmetler">Mimarlık &amp; Proje Tasarımı</Link>
+              <Link to="/hizmetler">Altyapı &amp; Radye Temel</Link>
             </nav>
           </div>
           

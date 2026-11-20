@@ -11,8 +11,8 @@ import toast from 'react-hot-toast';
 const PROJECT_TYPES = [
   {
     id: 'kaba-insaat',
-    title: 'Betonarme & Kaba İnşaat',
-    desc: 'Radye temel, perde beton, tünel/modüler kalıp ve ağır demir donatı uygulamaları',
+    title: 'Çelik Kalıp & Betonarme Kaba İnşaat',
+    desc: 'Endüstriyel çelik kalıp sistemleri, perde-kolon çelik kalıp, tünel kalıp, radye temel ve ağır demir donatı',
     icon: Layers,
   },
   {
@@ -50,9 +50,9 @@ const PROJECT_TYPES = [
 const AREA_PRESETS = ['100 - 500 m²', '500 - 1.500 m²', '1.500 - 5.000 m²', '5.000 - 15.000 m²', '15.000+ m²'];
 const FLOOR_OPTIONS = ['1 - 2 Kat / Müstakil', '3 - 5 Katlı Yapı', '6+ Kat / Çok Bloklu', 'Altyapı / İstinat / Saha'];
 const LAND_STATUS_OPTIONS = [
+  'Çelik Kalıp / Demir / Betonarme Uygulaması İstiyorum',
   'Arsam Var & Ruhsat/Proje Hazır',
   'Arsam Var, Mimari Proje Çizilecek',
-  'Taşeron (Kalıp / Demir / Beton) İşçiliği İstiyorum',
   'Kat Karşılığı Değerlendirme İstiyorum',
 ];
 const TIMELINE_OPTIONS = ['Hemen / Acil Başlangıç', '1 - 3 Ay İçinde', '3 - 6 Ay İçinde', 'Fiyat Araştırması Yapıyorum'];
