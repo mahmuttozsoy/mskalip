@@ -2,10 +2,13 @@
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
+  RewriteRule ^sitemap\.xml$ - [L]
+  RewriteRule ^robots\.txt$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_URI} !^/api
   RewriteCond %{REQUEST_URI} !^/uploads
+  RewriteCond %{REQUEST_URI} !^/sitemap\.xml
+  RewriteCond %{REQUEST_URI} !^/robots\.txt
   RewriteRule . /index.html [L]
 </IfModule>
-

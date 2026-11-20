@@ -12,7 +12,7 @@ export default defineConfig({
         const publicDir = path.resolve('public');
         const distDir = path.resolve('dist');
         if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-        for (const file of ['logo.png', 'logo-icon.png', 'favicon.svg', 'icons.svg', '.htaccess']) {
+        for (const file of ['logo.png', 'logo-icon.png', 'favicon.svg', 'icons.svg', '.htaccess', 'sitemap.xml', 'robots.txt']) {
           const src = path.join(publicDir, file);
           const dst = path.join(distDir, file);
           if (fs.existsSync(src)) {
