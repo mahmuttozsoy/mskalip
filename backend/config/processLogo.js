@@ -412,18 +412,98 @@ async function processLogo() {
       .png()
       .toFile(OUTPUT_FULL);
 
-    // Extract icon-only (emblem above text) from the cleaned buffer
-    const iconLeft = Math.round(cw * 0.255);
-    const iconTop = 0;
-    const iconWidth = Math.round(cw * 0.50);
-    const iconHeight = Math.round(ch * 0.556);
+    // Extract icon-only (emblem above text) using exact opaque bounding box (alpha === 255) so it is 100% centered
+    const maxEmblemY = Math.round(ch * 0.555);
+    let minX = cw, maxX = 0, minY = maxEmblemY, maxY = 0;
+    for (let y = 0; y < maxEmblemY; y++) {
+      for (let x = 0; x < cw; x++) {
+        const a = buf[(y * cw + x) * 4 + 3];
+        if (a === 255) {
+          if (x < minX) minX = x;
+          if (x > maxX) maxX = x;
+          if (y < minY) minY = y;
+          if (y > maxY) maxY = y;
+        }
+      }
+    }
 
-    await sharp(buf, { raw: { width: cw, height: ch, channels: 4 } })
+    const iconLeft = Math.max(0, minX - 2);
+    const iconTop = Math.max(0, minY - 2);
+    const iconWidth = Math.min(cw - iconLeft, maxX - minX + 5);
+    const iconHeight = Math.min(maxEmblemY - iconTop, maxY - minY + 5);
+
+    const rawEmblemPng = await sharp(buf, { raw: { width: cw, height: ch, channels: 4 } })
       .extract({ left: iconLeft, top: iconTop, width: iconWidth, height: iconHeight })
       .png()
-      .toFile(OUTPUT_ICON);
+      .toBuffer();
 
-    console.log('✅ Şeffaf logo güncellendi (frontend/public/logo.png)');
+    const publicDir = path.join(__dirname, '..', '..', 'frontend', 'public');
+    const distDir = path.join(__dirname, '..', '..', 'frontend', 'dist');
+
+    // Google Arama Sonuçları (Favicon Guidelines) için 1:1 tam kare (48x48 katları) koyu lacivert (#0D1526) zeminli yüksek kontrastlı ikon üretici
+    async function buildSquareFaviconBuffer(size) {
+      const innerSize = Math.round(size * 0.82);
+      const resizedEmblem = await sharp(rawEmblemPng)
+        .resize(innerSize, innerSize, {
+          fit: 'contain',
+          background: { r: 13, g: 21, b: 38, alpha: 0 },
+        })
+        .png()
+        .toBuffer();
+
+      return sharp({
+        create: {
+          width: size,
+          height: size,
+          channels: 4,
+          background: { r: 13, g: 21, b: 38, alpha: 255 }, // #0D1526
+        },
+      })
+        .composite([{ input: resizedEmblem, gravity: 'center' }])
+        .png()
+        .toBuffer();
+    }
+
+    const sizesToFiles = [
+      { size: 512, name: 'logo-icon.png' },
+      { size: 192, name: 'favicon-192x192.png' },
+      { size: 180, name: 'apple-touch-icon.png' },
+      { size: 96, name: 'favicon-96x96.png' },
+      { size: 48, name: 'favicon-48x48.png' },
+    ];
+
+    let png48Buffer = null;
+    for (const item of sizesToFiles) {
+      const sqBuf = await buildSquareFaviconBuffer(item.size);
+      if (item.size === 48) png48Buffer = sqBuf;
+      fs.writeFileSync(path.join(publicDir, item.name), sqBuf);
+      if (fs.existsSync(distDir)) {
+        try { fs.writeFileSync(path.join(distDir, item.name), sqBuf); } catch {}
+      }
+    }
+
+    // Standart binary favicon.ico (48x48 PNG gömülü) oluştur
+    if (png48Buffer) {
+      const icoHeader = Buffer.alloc(22);
+      icoHeader.writeUInt16LE(0, 0); // Reserved
+      icoHeader.writeUInt16LE(1, 2); // Type: 1 (ICO)
+      icoHeader.writeUInt16LE(1, 4); // Count: 1 image
+      icoHeader.writeUInt8(48, 6);   // Width: 48px
+      icoHeader.writeUInt8(48, 7);   // Height: 48px
+      icoHeader.writeUInt8(0, 8);    // Color palette
+      icoHeader.writeUInt8(0, 9);    // Reserved
+      icoHeader.writeUInt16LE(1, 10); // Color planes
+      icoHeader.writeUInt16LE(32, 12); // Bits per pixel
+      icoHeader.writeUInt32LE(png48Buffer.length, 14); // Size of PNG data
+      icoHeader.writeUInt32LE(22, 18); // Offset of PNG data
+      const icoBuffer = Buffer.concat([icoHeader, png48Buffer]);
+      fs.writeFileSync(path.join(publicDir, 'favicon.ico'), icoBuffer);
+      if (fs.existsSync(distDir)) {
+        try { fs.writeFileSync(path.join(distDir, 'favicon.ico'), icoBuffer); } catch {}
+      }
+    }
+
+    console.log('✅ Şeffaf logo ve Google Arama uyumlu kare favicon seti güncellendi');
   } catch (err) {
     console.error('Logo işleme hatası:', err.message);
   }

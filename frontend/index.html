@@ -2,8 +2,15 @@
 <html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/logo-icon.png" />
-    <link rel="apple-touch-icon" href="/logo-icon.png" />
+    <!-- Google Arama Sonuçları (Favicon Guidelines: 48x48 katları ve 1:1 kare format) -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/logo-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content="MŞ Group İnşaat & Mimarlık (MŞ Kalıp)" />
@@ -52,8 +59,13 @@
             "name": "MŞ Group İnşaat & Mimarlık (MŞ Kalıp)",
             "alternateName": ["MŞ Kalıp", "MS Kalıp", "MŞ Group Çelik Kalıp", "MŞ Group İnşaat", "mskalip.com"],
             "url": "https://mskalip.com",
-            "logo": "https://mskalip.com/logo.png",
-            "image": "https://mskalip.com/uploads/images/sah-photo-067.jpg",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://mskalip.com/logo-icon.png",
+              "width": 512,
+              "height": 512
+            },
+            "image": "https://mskalip.com/logo.png",
             "description": "MŞ Group İnşaat & Mimarlık (MŞ Kalıp); yüksek dayanımlı çelik kalıp sistemleri, endüstriyel perde ve kolon çelik kalıp montajı, tünel kalıp, betonarme kaba inşaat, ağır demir donatı, radye temel, yüksek istinat duvarı ve anahtar teslim inşaat projelerinde uzman mühendislik firmasıdır.",
             "telephone": "+905368696251",
             "email": "info@msgroup.com",

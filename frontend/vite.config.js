@@ -12,7 +12,20 @@ export default defineConfig({
         const publicDir = path.resolve('public');
         const distDir = path.resolve('dist');
         if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-        for (const file of ['logo.png', 'logo-icon.png', 'favicon.svg', 'icons.svg', '.htaccess', 'sitemap.xml', 'robots.txt']) {
+        const filesToCopy = [
+          'logo.png',
+          'logo-icon.png',
+          'favicon.ico',
+          'favicon-48x48.png',
+          'favicon-96x96.png',
+          'favicon-192x192.png',
+          'apple-touch-icon.png',
+          'site.webmanifest',
+          '.htaccess',
+          'sitemap.xml',
+          'robots.txt',
+        ];
+        for (const file of filesToCopy) {
           const src = path.join(publicDir, file);
           const dst = path.join(distDir, file);
           if (fs.existsSync(src)) {
