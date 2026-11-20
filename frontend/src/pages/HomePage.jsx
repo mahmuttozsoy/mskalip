@@ -394,7 +394,7 @@ export default function HomePage() {
                 <div className="divider" style={{ margin: '20px 0' }} />
                 <p style={{ color: 'var(--color-gray)', lineHeight: 1.8, marginBottom: '24px', fontSize: '15px' }}>
                   {settings.about_text_1 ||
-                    "2010 yılından bu yana Türkiye'nin önde gelen inşaat ve mimarlık firmalarından biri olarak faaliyet göstermekteyiz. Uzman mühendis ve mimar kadromuzla her projeyi en yüksek kalite standartlarında hayata geçiriyoruz."}
+                    "Kurucumuz Mustafa Şahin öncülüğünde 2010 yılından bu yana faaliyet gösteren MŞ Group İnşaat & Mimarlık (MŞ Kalıp), endüstriyel çelik kalıp sistemleri, betonarme kaba inşaat ve anahtar teslim yapı projelerinde Türkiye'nin güvenilir mühendislik markaları arasında yer almaktadır."}
                 </p>
                 <p style={{ color: 'var(--color-gray)', lineHeight: 1.8, marginBottom: '32px', fontSize: '15px' }}>
                   {settings.about_text_2 ||

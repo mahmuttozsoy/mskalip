@@ -124,9 +124,10 @@ export default function AboutPage() {
               <p style={{ color: 'var(--color-dark-gray)', lineHeight: 1.8, marginBottom: '20px', fontSize: '15px' }}>
                 {settings.about_text_1 || (
                   <>
-                    <strong>{settings.company_name || 'MŞ Group İnşaat Mimarlık'}</strong>, kurulduğu günden bu yana konut,
-                    ticari yapılar, mimari proje tasarımı, restorasyon ve altyapı alanlarında yüzlerce başarılı projeye imza
-                    atmıştır.
+                    Kurucumuz <strong>Mustafa Şahin</strong> liderliğinde kurulan ve adını baş harflerinden alan{' '}
+                    <strong>{settings.company_name || 'MŞ Group İnşaat Mimarlık'} (MŞ Kalıp)</strong>, kurulduğu günden bu yana
+                    endüstriyel çelik kalıp sistemleri, betonarme konut ve ticari yapılar, yüksek istinat duvarları, mimari
+                    proje tasarımı ve altyapı alanlarında yüzlerce başarılı projeye imza atmıştır.
                   </>
                 )}
               </p>

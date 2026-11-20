@@ -109,7 +109,9 @@ export default function Footer() {
         
         {/* Bottom */}
         <div className="footer-bottom">
-          <p>© {currentYear} {settings.company_name || 'MŞ Group İnşaat Mimarlık'}. Tüm hakları saklıdır.</p>
+          <p>
+            © {currentYear} {settings.company_name || 'MŞ Group İnşaat Mimarlık'} (MŞ Kalıp) — Kurucu: Mustafa Şahin. Tüm hakları saklıdır.
+          </p>
         </div>
       </div>
 

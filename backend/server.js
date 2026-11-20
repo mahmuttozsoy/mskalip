@@ -128,24 +128,24 @@ app.use(express.static(path.join(__dirname, '..', 'frontend', 'public')));
 
 const ROUTE_SEO_META = {
   '/projeler': {
-    title: 'Çelik Kalıp & Betonarme Projelerimiz | MŞ Group İnşaat (MŞ Kalıp)',
-    desc: 'MŞ Group İnşaat & Mimarlık (MŞ Kalıp) tarafından çelik kalıp sistemleriyle tamamlanan ve devam eden toplu konut, yüksek istinat duvarı, perde beton, radye temel ve endüstriyel tesis projeleri.',
+    title: 'Çelik Kalıp & Betonarme Projelerimiz | Mustafa Şahin — MŞ Group İnşaat (MŞ Kalıp)',
+    desc: 'Mustafa Şahin öncülüğündeki MŞ Group İnşaat & Mimarlık (MŞ Kalıp) tarafından çelik kalıp sistemleriyle tamamlanan ve devam eden toplu konut, yüksek istinat duvarı, perde beton, radye temel ve endüstriyel tesis projeleri.',
   },
   '/hizmetler': {
-    title: 'Çelik Kalıp Sistemleri & Betonarme İnşaat Hizmetlerimiz | MŞ Kalıp',
-    desc: 'Endüstriyel çelik kalıp sistemleri, perde ve kolon çelik kalıp uygulamaları, tünel kalıp, betonarme kaba inşaat, ağır demir donatı, radye temel ve anahtar teslim inşaat hizmetlerimiz.',
+    title: 'Çelik Kalıp Sistemleri & Betonarme İnşaat Hizmetlerimiz | MŞ Kalıp — Mustafa Şahin',
+    desc: 'Mustafa Şahin — MŞ Group İnşaat (MŞ Kalıp): Endüstriyel çelik kalıp sistemleri, perde ve kolon çelik kalıp uygulamaları, tünel kalıp, betonarme kaba inşaat, ağır demir donatı, radye temel ve anahtar teslim inşaat hizmetlerimiz.',
   },
   '/hakkimizda': {
-    title: 'Hakkımızda & Vizyonumuz | MŞ Group İnşaat & Çelik Kalıp Sistemleri',
-    desc: '15 yılı aşkın tecrübemiz, modern çelik kalıp parkurumuz ve uzman mühendis kadromuz ile Türkiye genelinde yüksek standartlı betonarme, çelik kalıp ve anahtar teslim yapı projeleri üretiyoruz.',
+    title: 'Hakkımızda & Vizyonumuz | Mustafa Şahin — MŞ Group İnşaat (MŞ Kalıp)',
+    desc: 'Kurucumuz Mustafa Şahin liderliğinde 15 yılı aşkın tecrübemiz, modern çelik kalıp parkurumuz ve uzman mühendis kadromuz ile Türkiye genelinde betonarme, çelik kalıp ve anahtar teslim yapı projeleri üretiyoruz.',
   },
   '/galeri': {
-    title: 'Çelik Kalıp & Şantiye Saha Galerisi | MŞ Group İnşaat (MŞ Kalıp)',
+    title: 'Çelik Kalıp & Şantiye Saha Galerisi | Mustafa Şahin — MŞ Group İnşaat (MŞ Kalıp)',
     desc: 'Şantiyelerimizden 148 uygulama fotoğrafı ve 14 saha videosu ile çelik kalıp montajı, perde beton dökümü, vinç operasyonu ve ağır demir donatı çalışmalarımızı inceleyin.',
   },
   '/iletisim': {
-    title: 'İletişim & Çelik Kalıp / İnşaat Teklifi | MŞ Group (+90 536 869 62 51)',
-    desc: 'Çelik kalıp uygulamaları, betonarme kaba inşaat ve anahtar teslim projeleriniz için ücretsiz keşif ve fiyat teklifi alın. Tel & WhatsApp: +90 536 869 62 51.',
+    title: 'İletişim & Çelik Kalıp / İnşaat Teklifi | Mustafa Şahin — MŞ Group (+90 536 869 62 51)',
+    desc: 'Mustafa Şahin — MŞ Group İnşaat (MŞ Kalıp) ile çelik kalıp uygulamaları, betonarme kaba inşaat ve anahtar teslim projeleriniz için ücretsiz keşif ve fiyat teklifi alın. Tel & WhatsApp: +90 536 869 62 51.',
   },
 };
 
